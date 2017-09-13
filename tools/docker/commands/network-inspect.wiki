@@ -1,0 +1,12 @@
+= Описание =
+`docker network inspect [OPTIONS] NETWORK`
+
+Создает сеть.
+
+= Аргументы =
+* `` -
+
+= Пример =
+{{{bash
+docker network inspect bridge
+}}}

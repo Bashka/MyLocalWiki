@@ -1,0 +1,12 @@
+= Описание =
+`docker volume rm [OPTIONS] VOLUME`
+
+Удаляет каталог.
+
+= Аргументы =
+* `` -
+
+= Пример =
+{{{bash
+docker volume rm my-volume
+}}}

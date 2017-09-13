@@ -1,0 +1,17 @@
+= Описание =
+`docker network create [OPTIONS] NETWORK`
+
+Создает новую сеть.
+
+= Аргументы =
+* `` -
+
+= Пример =
+{{{bash
+docker network create my_network
+}}}
+
+Запуск контейнера в новой сети:
+{{{bash
+docker create --network="my_network" my_image
+}}}

@@ -1,0 +1,22 @@
+= Описание =
+`docker network ls [OPTIONS]`
+
+Отображает список доступных сетей.
+
+*Важно*: по умолчанию контейнера запускаются в сети `bridge`.
+
+= Аргументы =
+* `` -
+
+= Пример =
+{{{bash
+docker network ls
+}}}
+
+Пример вывода:
+{{{
+NETWORK ID          NAME                DRIVER              SCOPE
+48e586e07aa2        bridge              bridge              local
+39f57811d33b        host                host                local
+90d0776d1699        none                null                local
+}}}

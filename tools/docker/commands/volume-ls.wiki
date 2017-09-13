@@ -1,0 +1,12 @@
+= Описание =
+`docker volume ls [OPTIONS]`
+
+Список каталогов.
+
+= Аргументы =
+* `` -
+
+= Пример =
+{{{bash
+docker volume ls
+}}}

@@ -1,0 +1,10 @@
+= Описание =
+`docker restart [OPTIONS] CONTAINER`
+
+= Аргументы =
+* `--time=10` - ожидать секунд перед принудительным завершением работы контейнера
+
+= Пример =
+{{{bash
+docker restart my_container
+}}}

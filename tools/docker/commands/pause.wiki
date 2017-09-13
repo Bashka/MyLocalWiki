@@ -1,0 +1,9 @@
+= Описание =
+`docker pause CONTAINER`
+
+Приостанавливает все процессы в контейнере.
+
+= Пример =
+{{{bash
+docker pause my_container
+}}}

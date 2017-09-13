@@ -1,0 +1,12 @@
+= Описание =
+`docker-compose build [OPTIONS]`
+
+Сборка контейнеров.
+
+= Аргументы =
+* `--no-cache` - не использовать кеш при сборке
+
+= Пример =
+{{{bash
+docker-compose build
+}}}

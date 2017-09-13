@@ -1,0 +1,12 @@
+= Описание =
+`docker volume inspect [OPTIONS] VOLUME`
+
+Информация о конкретном каталоге.
+
+= Аргументы =
+* `` -
+
+= Пример =
+{{{bash
+docker volume inspect my-volume
+}}}

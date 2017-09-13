@@ -1,0 +1,21 @@
+{{{bash
+#!/bin/bash
+
+# сборка образа бекенда
+docker build -t my/service-web .
+
+# создание сети, в которой будут работать все контейнеры приложения
+docker network create my_network
+
+# запуск вспомогательного сервиса в сети
+docker run -d --net my_network -p 9200:9200 -p 9300:9300 --name es elasticsearch
+
+# запуск основного бекенда в сети
+docker run -d --net my_network -p 8000:80 --name service-web my/service-web
+}}}
+
+Сервис `service-web` может взаимодействовать со вспомогательным сервисом `es` по сетевым адресам:
+* `es:9200` 
+* `es:9300` 
+
+Сам сервис `service-web` доступен из хост машины по адресу `localhost:8000`.

@@ -1,0 +1,9 @@
+= Описание =
+`docker network rm NETWORK`
+
+Удаляет сеть.
+
+= Пример =
+{{{bash
+docker network rm my_network
+}}}

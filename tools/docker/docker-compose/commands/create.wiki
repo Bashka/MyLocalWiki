@@ -1,0 +1,12 @@
+= Описание =
+`docker-compose create [OPTIONS]`
+
+Создание отсутствующих контейнеров.
+
+= Аргументы =
+* `` -
+
+= Пример =
+{{{bash
+docker-compose create
+}}}

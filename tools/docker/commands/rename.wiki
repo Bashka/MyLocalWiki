@@ -1,0 +1,9 @@
+= Описание =
+`docker rename CONTAINER NEW_NAME`
+
+Переименовывает контейнер
+
+= Пример =
+{{{bash
+docker rename a32 my_site
+}}}

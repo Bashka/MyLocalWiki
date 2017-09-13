@@ -1,0 +1,12 @@
+{{{bash
+# В терминале A
+docker run -it --name="container" --rm my_image # Запуск контейнера на основе образа
+
+apt-get update && apt-get install php # Внесение изменений в контейнере
+
+# В терминале B
+docker commit container new_image # Коммит изменений в контейнере в новый образ
+
+# В терминале A
+exit # Выход из контейнера
+}}}

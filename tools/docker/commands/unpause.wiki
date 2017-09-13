@@ -1,0 +1,9 @@
+= Описание =
+`docker unpause CONTAINER`
+
+Возобновляет работу всех приостановленных ранее процессов контейнера.
+
+= Пример =
+{{{bash
+docker unpause my_container
+}}}

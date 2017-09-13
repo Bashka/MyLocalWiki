@@ -1,0 +1,13 @@
+= Описание =
+`docker build [OPTIONS] PATH`
+
+Собирает образ из `Dockerfile`, расположенному в каталоге по адресу `PATH`.
+
+= Аргументы =
+* `--tag=vendor/name` - задает публичное имя создаваемому образу
+* `--file=FILE` - использовать файл `FILE` в качестве `Dockerfile` для сборки
+
+= Пример =
+{{{bash
+docker build --tag="user/my_image" .
+}}}

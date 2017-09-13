@@ -1,0 +1,9 @@
+= Описание =
+`docker-compose images`
+
+Список используемых образов.
+
+= Пример =
+{{{bash
+docker-compose images
+}}}

@@ -1,0 +1,14 @@
+= Описание =
+`docker commit CONTAINER [NAME[:TAG]]`
+
+Фиксирует изменения контейнера в виде нового образа с именем `NAME` и тегом `TAG`.
+
+= Аргументы =
+* `--author=user` - задает автора образу
+* `--message=description` - описание коммита
+* `--pause=false` - не останавливать контейнер перед коммитом
+
+= Пример =
+{{{bash
+docker commit my_container vendor\new_image:v2
+}}}

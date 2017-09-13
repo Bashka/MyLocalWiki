@@ -1,0 +1,17 @@
+= Описание =
+`docker volume create [OPTIONS] [VOLUME]`
+
+Создание именованного каталога.
+
+= Аргументы =
+* `` -
+
+= Пример =
+{{{bash
+docker volume create my-volume
+}}}
+
+Использование именованного контейнера:
+{{{bash
+docker run -d -v my-volume:/var/tmp my_image
+}}}

@@ -1,0 +1,9 @@
+= Описание =
+`docker-compose pause`
+
+Приостановка контейнеров.
+
+= Пример =
+{{{bash
+docker-compose pause
+}}}

@@ -1,0 +1,49 @@
+= Декларации =
+* `FROM` - имя базового (родительского) образа
+* `ENV` - установка переменных окружения
+* `RUN` - запуск команды во время сборки образа
+* `ADD` - копирование каталога хоста в образ
+* `EXPOSE` - открытие порта
+* `VOLUME` - открытие каталога
+* `ENTRYPOINT` - выполняемая в контейнере команда
+* `CMD` - запуск команды при старте контейнера без параметра `COMMAND`
+
+= Пример =
+== Конфигурация образа для разработки web-сервиса ==
+{{{
+# За основу взят образ с предустановленым nginx, php и fpm
+FROM richarvey/nginx-php-fpm
+
+# Корневой каталог сайта доступен для монтирования из вне
+VOLUME /home/www/html
+
+# Порт 80 доступен для монтирования из вне
+EXPOSE 80
+
+# Запуск веб-сервера при старте контейнера в качестве основной команды
+ENTRYPOINT /bin/apache2
+}}}
+
+Сборка и запуск образа:
+{{{bash
+docker build vendor/service .
+docker run -v /home/user/html:/var/www/html -p 8000:80 -d vendor/service
+}}}
+
+== Конфигурация образа для запуска httpd ==
+{{{
+FROM alpine
+
+RUN mkdir /var/www
+COPY ./index.html /var/www/index.html
+
+EXPOSE 80
+
+ENTRYPOINT httpd -p 80 -f -h /var/www
+}}}
+
+Сборка и запуск образа:
+{{{bash
+docker build vendor/service .
+docker run -p 8000:80 -d vendor/service
+}}}

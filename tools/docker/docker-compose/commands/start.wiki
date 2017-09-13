@@ -1,0 +1,9 @@
+= Описание =
+`docker-compose start`
+
+Запуск контейнеров.
+
+= Пример =
+{{{bash
+docker-compose start
+}}}

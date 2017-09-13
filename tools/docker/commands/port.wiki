@@ -1,0 +1,9 @@
+= Описание =
+`docker port CONTAINER`
+
+Просмотр информации о портах контейнера.
+
+= Пример =
+{{{bash
+docker port my_container
+}}}
