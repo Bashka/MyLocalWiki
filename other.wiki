@@ -1,1 +1,2 @@
 * `sudo dpkg-reconfigure keyboard-configuration` - конфигурация клавиатуры (для отключения свитчера)
+* `yarn add --dev react-dom react redux` - Установка react, react-dom, redux
