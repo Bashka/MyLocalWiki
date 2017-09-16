@@ -1,0 +1,48 @@
+= Семантика =
+{{{
+[VAR=VALUE]
+
+TARGET [TARGET]: DEP [DEP]
+	MAKER
+	[MAKER]
+}}}
+
+* `TARGET` - цель (или имя команды)
+* `DEP` - зависимости (цели)
+* `MAKER` - команда сборки
+* `VAR` - переменная
+* `VALUE` - значение переменной
+
+= Пример =
+Пример файла `Makefile`:
+{{{
+# Переменные окружения
+BIN=./node_modules/.bin
+IN=src
+OUT=build
+
+# Основная цель - зависит от сжатия CSS
+all: $(OUT)/style.min.css
+
+# Сжатие CSS - зависит от компиляции LESS
+$(OUT)/style.min.css: $(OUT)/style.css
+	$(BIN)/csso $(OUT)/style.css $(OUT)/style.min.css
+
+# Компиляция LESS в CSS - зависит от файла LESS
+$(OUT)/style.css: $(IN)/style.less
+	$(BIN)/lessc $(IN)/style.less > $(OUT)/style.css
+
+# Отчистка проекта
+clean:
+	rm -f $(OUT)/*
+}}}
+
+Сборка проекта (первая цель, не начинающаяся с `.`):
+{{{bash
+make
+}}}
+
+Сборка конкретной цели:
+{{{bash
+make clean
+}}}
