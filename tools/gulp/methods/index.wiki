@@ -1,4 +1,5 @@
 * [[task]]
 * [[watch]]
+* [[start]]
 * [[src]]
 * [[dest]]
