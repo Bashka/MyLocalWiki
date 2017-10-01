@@ -4,6 +4,8 @@
 var gulp = require('gulp'),
   less = require('gulp-less');
 	
+gulp.task('default', ['less']);
+	
 gulp.task('less', function(){
   gulp.src('less/**/*.less', {base: 'src'})
     .pipe(less())
