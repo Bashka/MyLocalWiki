@@ -1,0 +1,21 @@
+= Описание =
+`concat(String name, [Array options])`
+
+Объединяет данный конвеера в файл с заданным именем.
+
+== Аргументы ==
+* `name` - имя выходного файла
+* `options` - опции
+	* `newLine` - используемый разделитель данных (на пример `;`)
+	* `stat.mode` - права доступа (на пример `"0777"`)
+
+= Пример =
+{{{javascript
+var concat = require('gulp-concat');
+ 
+gulp.task('js', function() {
+  return gulp.src(['lib/**/*.js', 'src/js/**/*.js'])
+    .pipe(concat('main.js', {stat: { mode: 0666 }}))
+    .pipe(gulp.dest('dist/js'));
+});
+}}}

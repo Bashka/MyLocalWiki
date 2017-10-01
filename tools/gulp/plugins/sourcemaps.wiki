@@ -1,0 +1,28 @@
+= Описание =
+`sourcemaps.init()`
+
+Инициализирует генератор карт исходных кодов.
+
+`sourcemaps.write([String path])`
+
+Записывает сгенерированные на данном этапе карты исходных кодов.
+
+== Аргументы ==
+* `path` - каталог, в который будут сохранены карты исходных кодов (по умолчанию в каталог, используемый методом `dest`)
+
+= Пример =
+{{{javascript
+var gulp = require('gulp'),
+	plugin1 = require('gulp-plugin1'),
+	plugin2 = require('gulp-plugin2'),
+	sourcemaps = require('gulp-sourcemaps');
+ 
+gulp.task('javascript', function() {
+  gulp.src('src/**/*.js')
+    .pipe(sourcemaps.init())
+      .pipe(plugin1())
+      .pipe(plugin2())
+    .pipe(sourcemaps.write('../maps'))
+    .pipe(gulp.dest('dist'));
+});
+}}}

@@ -1,5 +1,7 @@
 = Инструменты =
 * [[/tools/docker/|Docker]]
+* [[/tools/make/|Make]]
+* [[/tools/gulp/|Gulp]]
 
 = Разное =
 * [[/about|О вики]]

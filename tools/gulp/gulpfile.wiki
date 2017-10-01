@@ -1,0 +1,53 @@
+= Пример =
+== Компиляция Less ==
+{{{javascript
+var gulp = require('gulp'),
+  less = require('gulp-less');
+	
+gulp.task('less', function(){
+  gulp.src('less/**/*.less', {base: 'src'})
+    .pipe(less())
+    .pipe(gulp.dest('css'), {cwd: 'dest'});
+});
+
+gulp.task('watch', function(){
+  gulp.watch('src/less/**/*.less', ['less']);
+});
+}}}
+
+== Использование sources.json файла ==
+Файл `sources.json`:
+{{{javascript
+{
+	"src": {
+		"cwd": "src",
+		"less": {
+			"cwd": "src/less",
+			"all": "src/less/**/*.less"
+		}
+	},
+	"dest": {
+		"cwd": "dest",
+		"css": {
+			"cwd": "dest/css"
+		}
+	}
+}
+}}}
+
+Файл `gulpfile.js`:
+{{{javascript
+var _ = require('./sources.json'),
+  gulp = require('gulp'),
+  less = require('gulp-less');
+
+gulp.task('less', function(){
+  gulp.src(_.src.less.all)
+    .pipe(less())
+    .pipe(gulp.dest(_.dest.css.cwd));
+});
+
+gulp.task('watch', function(){
+  gulp.watch(_.src.less.all, ['less']);
+});
+}}}

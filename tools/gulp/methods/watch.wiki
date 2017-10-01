@@ -1,0 +1,42 @@
+= Описание =
+`gulp.watch(String|Array pattern, [Array options], Array tasks): Watcher`
+
+Устанавливает слушатель, выполняющий заданные задачи при изменении файлов.
+
+== Аргументы ==
+* `pattern` ({{https://github.com/isaacs/node-glob|Glob}}) - описывает шаблон (или массив шаблонов) для выборки прослушиваемых файлов
+* `options` ({{https://github.com/shama/gaze|Gaze}}) - опции слушателя
+	* `interval` - интервал опроса файлов (в секундах)
+	* `debounceDelay` - задержка перед вызовом обработчика события (в микросекундах)
+	* `mode` - режим определения изменений: `auto` - автоматически (по умолчанию); `watch` - нативные события; `poll` - проверка статистики файлов
+	* `cws` - каталог, используемый в качестве корня
+* `tasks` - массив имен задач, которые будут вызываться при изменении любого из файлов шаблона
+
+`gulp.watch(String|Array pattern, [Array options], Function callback): Watcher`
+
+Устанавливает функцию-обработчик события изменения файлов.
+
+== Аргументы ==
+* `pattern` - описывает шаблон (или массив шаблонов) для выборки прослушиваемых файлов
+* `options` - опции слушателя
+* `callback` - функция-обработчик изменений, принимающая следующие аргументы:
+	* `event` - событие изменения
+		* `type` - тип события: `added`, `changed`, `deleted`, `renamed`
+		* `path` - адрес измененного файла
+
+= Пример =
+{{{javascript
+gulp.task('watch', function(){
+  var watcher = gulp.watch('src/less/**/*.less', ['less']);
+	
+	watcher.on('change', function(event){
+		console.log('Change less file: ' + event.path);
+	});
+});
+}}}
+
+{{{javascript
+gulp.watch('src/less/**/*.less', function(event){
+	// ...
+});
+}}}

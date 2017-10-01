@@ -2,16 +2,19 @@
 {{{
 [VAR=VALUE]
 
+include INC_FILE [INC_FILE]
+
 TARGET [TARGET]: DEP [DEP]
 	MAKER
 	[MAKER]
 }}}
 
+* `VAR` - переменная
+* `VALUE` - значение переменной
+* `INC_FILE` - подключаемый, сторонний Makefile
 * `TARGET` - цель (или имя команды)
 * `DEP` - зависимости (цели)
 * `MAKER` - команда сборки
-* `VAR` - переменная
-* `VALUE` - значение переменной
 
 = Пример =
 Пример файла `Makefile`:
@@ -22,15 +25,23 @@ IN=src
 OUT=build
 
 # Основная цель - зависит от сжатия CSS
-all: $(OUT)/style.min.css
+all: $(OUT)/style.min.css.gz
 
-# Сжатие CSS - зависит от компиляции LESS
-$(OUT)/style.min.css: $(OUT)/style.css
-	$(BIN)/csso $(OUT)/style.css $(OUT)/style.min.css
+# Сжатие CSS - зависит от минификации CSS
+$(OUT)/style.min.css.gz: $(OUT)/style.min.css
+	gzip -9 -c $(OUT)/style.min.css > $(OUT)/style.min.css.gz
 
-# Компиляция LESS в CSS - зависит от файла LESS
-$(OUT)/style.css: $(IN)/style.less
+# Минификация CSS и создание карты - зависит от компиляции LESS
+$(OUT)/style.min.css $(OUT)/style.map: $(OUT)/style.css
+	$(BIN)/csso $(OUT)/style.css $(OUT)/style.min.css --map $(OUT)/style.map
+
+# Компиляция LESS в CSS - зависит от всех файлов LESS
+$(OUT)/style.css: $(IN)/*.less
 	$(BIN)/lessc $(IN)/style.less > $(OUT)/style.css
+
+# Удаление артефактов проекта
+distclean:
+	rm $(OUT)/style.min.css $(OUT)/style.css
 
 # Отчистка проекта
 clean:

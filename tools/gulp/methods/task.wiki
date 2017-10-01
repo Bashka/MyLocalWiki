@@ -1,0 +1,22 @@
+= Описание =
+`gulp.task(String name, [Array dependencies], [Function handler])`
+
+Устанавливает обработчик для задачи.
+
+== Аргументы ==
+* `name` - имя задачи
+* `dependencies` - массив имен задач, от которых зависит данная
+* `handler` - функция-обработчик задачи
+
+= Пример =
+Объявление задачи в файле `gulpfile.js`:
+{{{javascript
+gulp.task('my-task', ['other-task'], function(){
+	// ...
+});
+}}}
+
+Вызов обработчика задачи:
+{{{bash
+gulp my-task
+}}}
