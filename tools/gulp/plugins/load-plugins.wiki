@@ -1,0 +1,16 @@
+= Описание =
+`plugins.*()`
+
+Загружает и вызывает указанный плагин.
+
+= Пример =
+{{{javascript
+var gulp = require('gulp'),
+  plugins = require('gulp-load-plugins')();
+
+gulp.task('less', function(){
+  gulp.src('src')
+    .pipe(plugins.less()) // Плагин gulp-less должен быть установлен заранее
+    .pipe(gulp.dest('dest'));
+});
+}}}
