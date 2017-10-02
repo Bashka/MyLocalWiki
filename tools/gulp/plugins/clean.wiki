@@ -1,0 +1,12 @@
+= Описание =
+`gulp.clean()`
+
+Удаляет файлы и каталоги конвеера.
+
+= Пример =
+{{{javascript
+gulp.task('clean', function(){
+  gulp.src('dest/*')
+    .pipe(plugins.clean());
+});
+}}}
