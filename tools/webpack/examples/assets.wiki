@@ -3,6 +3,7 @@
 ▾ public/
     index.html
 ▾ src/
+    background.jpg
     main.js
     Sayer.js
     style.css
@@ -26,8 +27,16 @@
 }}}
 
 = Стили =
-Файл `src/style.css` (для сборки css необходимы загрузчики `style-loader` и `css-loader`):
+*Важно*: для сборки css необходимы загрузчики `style-loader` и `css-loader`.
+
+*Важно*: для сборки изображений необходимы загрузчики `file-loader`.
+
+Файл `src/style.css`:
 {{{css
+body {
+    background-image: url('./background.jpg');
+}
+
 .foo {
 	color: blue;
 }
@@ -64,7 +73,8 @@ o.say('world');
   "devDependencies": {
     "webpack": "^3.0",
 	  "style-loader": "*",
-	  "css-loader": "*"
+	  "css-loader": "*",
+	  "file-loader": "*"
   },
   "scripts": {
 	  "build": "webpack"
@@ -88,6 +98,12 @@ module.exports = {
         use: [
           'style-loader',
           'css-loader'
+        ]
+      }
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          'file-loader'
         ]
       }
     ]
