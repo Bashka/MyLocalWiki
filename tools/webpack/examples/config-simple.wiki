@@ -1,0 +1,69 @@
+Файл `src/Sayer.js`:
+{{{javascript
+function Sayer(greeting){
+  this.greeting = greeting;
+}
+
+Sayer.prototype.say = function(name){
+  console.log(this.greeting + ' ' + name);
+};
+
+module.exports = Sayer;
+}}}
+
+Файл `src/main.js`:
+{{{javascript
+var Sayer = require('./Sayer');
+
+var o = new Sayer('hello');
+o.say('world');
+}}}
+
+Файл `webpack.config.js`:
+{{{javascript
+module.exports = {
+  entry: './src/main.js',
+  output: {
+    filename: './public/bundle.js'
+  }
+};
+}}}
+
+Файл `public/index.html`:
+{{{html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="bundle.js"></script>
+	</head>
+	<body>
+	</body>
+</html>
+}}}
+
+== Сборка из консоли ==
+Сборка:
+{{{bash
+./node_modules/.bin/webpack
+}}}
+
+== Сборка с помощью npm scripts ==
+Файл `package.json`:
+{{{javascript
+{
+  "name": "my_project",
+  "devDependencies": {
+    "webpack": "^3.0"
+  },
+  "scripts": {
+	  "build": "webpack"
+  }
+}
+}}}
+
+Сборка:
+{{{bash
+npm run build
+}}}

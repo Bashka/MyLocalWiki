@@ -1,0 +1,102 @@
+= Структура проекта =
+{{{
+▾ public/
+    index.html
+▾ src/
+    main.js
+    Sayer.js
+    style.css
+  package.json
+  webpack.config.js
+}}}
+
+= Документы =
+Файл `public/index.html`:
+{{{html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="bundle.js"></script>
+	</head>
+	<body>
+	</body>
+</html>
+}}}
+
+= Стили =
+Файл `src/style.css` (для сборки css необходимы загрузчики `style-loader` и `css-loader`):
+{{{css
+.foo {
+	color: blue;
+}
+}}}
+
+= Скрипты =
+Файл `src/Sayer.js`:
+{{{javascript
+function Sayer(greeting){
+  this.greeting = greeting;
+}
+
+Sayer.prototype.say = function(name){
+  console.log(this.greeting + ' ' + name);
+};
+
+module.exports = Sayer;
+}}}
+
+Файл `src/main.js`:
+{{{javascript
+require('./style.css');
+var Sayer = require('./Sayer');
+
+var o = new Sayer('hello');
+o.say('world');
+}}}
+
+= Package.json =
+Файл `package.json`:
+{{{javascript
+{
+  "name": "my_project",
+  "devDependencies": {
+    "webpack": "^3.0",
+	  "style-loader": "*",
+	  "css-loader": "*"
+  },
+  "scripts": {
+	  "build": "webpack"
+  }
+}
+}}}
+
+= Webpack.config.js =
+Файл `webpack.config.js`:
+{{{javascript
+module.exports = {
+  entry: './src/main.js',
+  output: {
+    filename: 'bundle.js',
+    path: __dirname + '/public'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      }
+    ]
+  }
+};
+}}}
+
+= Сборка =
+Сборка:
+{{{bash
+npm run build
+}}}

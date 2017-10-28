@@ -2,6 +2,7 @@
 * [[/tools/docker/|Docker]]
 * [[/tools/make/|Make]]
 * [[/tools/gulp/|Gulp]]
+* [[/tools/webpack/|WebPack]]
 
 = Разное =
 * [[/about|О вики]]
