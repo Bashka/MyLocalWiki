@@ -1,0 +1,32 @@
+= Описание =
+`uglifyjs-webpack-plugin`
+
+Выполняет оптимизацию и минификацию JS.
+
+= Опции =
+* `test` - массив регулярных выражений, определяющий подходящий для минификации файлы
+* `include`
+* `exclude`
+* `cache`
+* `parallel` - число потоков для параллельной обработки
+* `sourceMap` - включать source map в результирующий код
+* `uglifyOptions`
+	* `ie8` - обратная совместимость с IE8
+	* `ecma` - номер версии стандарта ECMAScript с которым должна быть обратная совместимость
+	* `output` ({{https://github.com/mishoo/UglifyJS2/tree/harmony#output-options|docs}}) - конфигурации минификации 
+
+= Примеры =
+{{{javascript
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+
+module.exports = merge(common, {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: __dirname + '/public'
+  },
+  plugins: [
+    new UglifyJSPlugin()
+  ]
+});
+}}}

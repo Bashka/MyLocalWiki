@@ -1,3 +1,4 @@
 * [[cli|Работа через консоль]]
 * [[webpack.config|webpack.config.js]]
+* [[plugins/|Плагины и инструменты]]
 * [[examples/|Примеры]]

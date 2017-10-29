@@ -1,0 +1,30 @@
+= Описание =
+`webpack.DefinePlugin`
+
+Позволяет установить переменные окружения для пакета.
+
+= Примеры =
+Файл `webpack.config.js`:
+{{{javascript
+const webpack = require('webpack');
+
+module.exports = merge(common, {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: __dirname + '/public'
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('prod')
+    })
+  ]
+});
+}}}
+
+Файл `src/index.js`:
+{{{javascript
+if(process.env.NODE_ENV !== 'prod'){
+	console.log('dev env');
+}
+}}}

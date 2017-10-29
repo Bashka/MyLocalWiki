@@ -8,6 +8,12 @@
 * `--watch` - автоматически пересобирать проект при появлении изменений
 
 = Пример =
+Сборка простого проекта:
 {{{bash
-./node_modules/.bin/webpack src/main.js public/bundle.js
+webpack src/main.js public/bundle.js
+}}}
+
+Использование кастомного файла конфигурации для сборки:
+{{{bash
+webpack --config webpack.prod.js
 }}}
