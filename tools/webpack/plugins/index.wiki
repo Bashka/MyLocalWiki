@@ -4,3 +4,4 @@
 = Плагины =
 * [[define|DefinePlugin]] - установка переменных окружения
 * [[uglifyjs|Uglifyjs]] - минификация JS
+* [[common-chunk|CommonsChunk]] - выделяет общий код в отдельный пакет

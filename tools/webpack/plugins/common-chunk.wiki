@@ -1,0 +1,75 @@
+= Описание =
+`webpack.optimize.CommonsChunkPlugin`
+
+Выделяет общий код пакетов в отдельный пакет.
+
+= Опции =
+* `name` - имя целевого пакета
+
+= Примеры =
+Файл `src/index.js`:
+{{{javascript
+import moment from 'moment';
+
+console.log(moment().format('DD MM YYYY'));
+}}}
+
+Файл `src/about.js`:
+{{{javascript
+import moment from 'moment';
+
+console.log(moment().format('MM DD YYYY'));
+}}}
+
+Файл `webpack.config.js`:
+{{{javascript
+const webpack = require('webpack');
+
+module.exports = {
+  entry: {
+    index: './src/index.js',
+    about: './src/about.js'
+  },
+  output: {
+    filename: '[name].bundle.js',
+    path: __dirname + '/public'
+  },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'common'
+    })
+  ]
+};
+}}}
+
+Файл `public/index.html`:
+{{{html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Index page</title>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="common.bundle.js"></script>
+		<script type="text/javascript" src="index.bundle.js"></script>
+	</head>
+	<body>
+		...
+	</body>
+</html>
+}}}
+
+Файл `public/about.html`:
+{{{html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>About page</title>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="common.bundle.js"></script>
+		<script type="text/javascript" src="about.bundle.js"></script>
+	</head>
+	<body>
+		...
+	</body>
+</html>
+}}}
