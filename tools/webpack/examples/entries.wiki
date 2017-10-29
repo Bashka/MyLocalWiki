@@ -1,0 +1,66 @@
+= Структура проекта =
+{{{
+▾ public/
+    index.html
+		about.html
+▾ src/
+    index.js
+		about.js
+  package.json
+  webpack.config.js
+}}}
+
+= Документы =
+Файл `public/index.html`:
+{{{html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="index.bundle.js"></script>
+	</head>
+	<body>
+	</body>
+</html>
+}}}
+
+Файл `public/about.html`:
+{{{html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="about.bundle.js"></script>
+	</head>
+	<body>
+	</body>
+</html>
+}}}
+
+= Скрипты =
+Файл `src/index.js`:
+{{{javascript
+console.log('Hello index');
+}}}
+
+Файл `src/about.js`:
+{{{javascript
+console.log('Hello about');
+}}}
+
+= Webpack.config.js =
+Файл `webpack.config.js`:
+{{{javascript
+module.exports = {
+  entry: {
+		index: './src/index.js',
+		about: './src/about.js'
+	},
+  output: {
+    filename: '[name].bundle.js',
+    path: __dirname + '/public'
+  }
+};
+}}}

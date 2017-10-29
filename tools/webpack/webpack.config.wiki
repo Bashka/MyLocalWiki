@@ -1,7 +1,8 @@
 = Декларации =
-* `entry` - входной скрипт проекта
+* `entry` - опции входа
+	* `имя` - адрес входного скрипта
 * `output` - опции пакетов
-	* `filename` - имя файла пакета
+	* `filename` - имя файла пакета (`[name]` - имя входного скрипта)
 	* `path` - адрес каталога пакета
 * `module` - конфигурации подключаемых модулей
 	* `rules` - правила загрузки модулей
@@ -12,11 +13,13 @@
 {{{javascript
 module.exports = {
 	// Входной скрипт
-  entry: './src/main.js',
+  entry: {
+		main: './src/main.js'
+	},
 	// Выходной пакет
   output: {
 		// Имя пакета
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
 		// Каталог пакета
     path: __dirname + '/public'
   },
