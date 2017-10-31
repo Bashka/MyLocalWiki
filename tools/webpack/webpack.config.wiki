@@ -2,7 +2,7 @@
 * `entry` - опции входа
 	* `имя` - адрес входного скрипта
 * `output` - опции пакетов
-	* `filename` - имя файла пакета (`[name]` - имя входного скрипта)
+	* `filename` - имя файла пакета (`[name]` - имя входного скрипта, `[chunkhash]` - хеш компонента)
 	* `path` - адрес каталога пакета
 * `devtool` - правило генерации source maps ({{https://webpack.js.org/configuration/devtool#devtool|Devtool}})
 * `module` - конфигурации подключаемых модулей
