@@ -1,0 +1,63 @@
+= Структура проекта =
+{{{
+▾ public/
+    index.html
+▾ src/
+    main.js
+    lazy.js
+  package.json
+  webpack.config.js
+}}}
+
+= Документы =
+Файл `public/index.html`:
+{{{html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="bundle.js"></script>
+	</head>
+	<body>
+	</body>
+</html>
+}}}
+
+= Скрипты =
+*Важно*: метод `import` поддерживается только с версии ES6. Для старых браузеров используется {{https://github.com/sheerun/es6-module-loader|полифил}}.
+
+Файл `src/lazy.js` (не требует сборки в пакет):
+{{{javascript
+console.log('Lazy module is loaded');
+
+export default function(){
+  console.log('lazy');
+}
+}}}
+
+Файл `src/main.js`:
+{{{javascript
+import('./lazy')
+  .then(function(module){
+    module.default();
+  });
+}}}
+
+= Webpack.config.js =
+Файл `webpack.config.js`:
+{{{javascript
+module.exports = {
+  entry: './src/main.js',
+  output: {
+    filename: 'bundle.js',
+    path: __dirname + '/public'
+  }
+};
+}}}
+
+= Сборка =
+Сборка:
+{{{bash
+npm run build
+}}}
