@@ -1,0 +1,61 @@
+= Структура проекта =
+{{{
+▾ public/
+	▾ dist/
+    index.html
+▾ src/
+    main.js
+    lazy.js
+  package.json
+  webpack.config.js
+}}}
+
+= Документы =
+Файл `public/index.html`:
+{{{html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="/dist/bundle.js"></script>
+	</head>
+	<body>
+	</body>
+</html>
+}}}
+
+= Скрипты =
+Файл `src/lazy.js` (не требует сборки в пакет):
+{{{javascript
+export default function(){
+  ...
+}
+}}}
+
+Файл `src/main.js`:
+{{{javascript
+import('./lazy')
+  .then(function(module){
+    module.default();
+  });
+}}}
+
+= Webpack.config.js =
+Файл `webpack.config.js`:
+{{{javascript
+module.exports = {
+  entry: './src/main.js',
+  output: {
+    filename: 'bundle.js',
+    path: __dirname + '/public/dist',
+		publicPath: '/dist/'
+  }
+};
+}}}
+
+= Сборка =
+Сборка:
+{{{bash
+npm run build
+}}}

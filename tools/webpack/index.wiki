@@ -2,3 +2,5 @@
 * [[webpack.config|webpack.config.js]]
 * [[plugins/|Плагины и инструменты]]
 * [[examples/|Примеры]]
+
+{{https://webpack.js.org/guides/|Guides}}

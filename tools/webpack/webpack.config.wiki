@@ -1,29 +1,38 @@
 = Декларации =
+* `context` - корневой каталог проекта
 * `entry` - опции входа
 	* `имя` - адрес входного скрипта
 * `output` - опции пакетов
 	* `filename` - имя файла пакета (`[name]` - имя входного скрипта, `[chunkhash]` - хеш компонента)
 	* `path` - адрес каталога пакета
+	* `publicPath` - публичный адрес каталога пакета
 * `devtool` - правило генерации source maps ({{https://webpack.js.org/configuration/devtool#devtool|Devtool}})
 * `module` - конфигурации подключаемых модулей
 	* `rules` - правила загрузки модулей
 		* `test` - регулярное выражение, применяемое к имени подключаемого модуля для определения приминимости загрузчиков
 		* `use` - применяемые загрузчики
 * `plugins` - используемые плагины
+* `resolve` - правила разрешения путей
+	* `alias` - псевдонимы путей
+		* `псевдоним` - абсолютный путь
+	* `modules` - адреса каталогов модулей
 
 = Пример =
 {{{javascript
 module.exports = {
+	context: __dirname + '/src',
 	// Входной скрипт
   entry: {
-		main: './src/main.js'
+		main: './main.js'
 	},
 	// Выходной пакет
   output: {
 		// Имя пакета
     filename: '[name].bundle.js',
 		// Каталог пакета
-    path: __dirname + '/public'
+    path: __dirname + '/public/dist',
+		// Публичный адрес каталога пакета
+		publicPath: '/dist/'
   },
 	// Конфигурация подключаемых модули
 	module: {
@@ -40,6 +49,14 @@ module.exports = {
 				]
 			}
 		]
+	},
+	resolve: {
+		//Псевдонимы путей
+		alias: {
+			'style': __dirname + '/src/style'
+		},
+		// Каталоги модулей
+		modules: ['node_modules']
 	}
 };
 }}}

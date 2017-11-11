@@ -1,0 +1,104 @@
+= Структура проекта =
+{{{
+▾ public/
+    index.html
+▾ src/
+	▾ images/
+			background.jpg
+	▾ style/
+			style.css
+    main.js
+  package.json
+  webpack.config.js
+}}}
+
+= Документы =
+Файл `public/index.html`:
+{{{html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="/bundle.js"></script>
+	</head>
+	<body>
+	</body>
+</html>
+}}}
+
+= Стили =
+*Важно*: для сборки css необходимы загрузчики `style-loader` и `css-loader`.
+
+*Важно*: для сборки изображений необходимы загрузчики `file-loader`.
+
+Файл `src/style.css`:
+{{{css
+body {
+    background-image: url('~images/background.jpg');
+}
+}}}
+
+= Скрипты =
+Файл `src/main.js`:
+{{{javascript
+require('style/style.css');
+}}}
+
+= Package.json =
+Файл `package.json`:
+{{{javascript
+{
+  "name": "my_project",
+  "devDependencies": {
+    "webpack": "^3.0",
+	  "style-loader": "*",
+	  "css-loader": "*",
+	  "file-loader": "*"
+  },
+  "scripts": {
+	  "build": "webpack"
+  }
+}
+}}}
+
+= Webpack.config.js =
+Файл `webpack.config.js`:
+{{{javascript
+module.exports = {
+  entry: './src/main.js',
+  output: {
+    filename: 'bundle.js',
+    path: __dirname + '/public'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      }
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          'file-loader'
+        ]
+      }
+    ]
+  },
+	resolve: {
+		alias: {
+			'style': __dirname + '/src/style',
+			'images': __dirname + '/src/images',
+		}
+	}
+};
+}}}
+
+= Сборка =
+Сборка:
+{{{bash
+npm run build
+}}}
