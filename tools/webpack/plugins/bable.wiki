@@ -1,0 +1,45 @@
+= Описание =
+* `babel-core` - препроцессор
+* `babel-preset-env` - логика приведения стандартов к ранним версиям
+* `babel-loader` - загрузчик плагина для Webpack
+
+= Примеры =
+Файл `webpack.js`:
+{{{javascript
+const webpack = require('webpack');
+
+module.exports = {
+  context: __dirname + '/src',
+  entry: './index.js',
+  output: {
+    filename: '[name].js',
+    path: __dirname + '/public/dist'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env']
+          }
+        }
+      }
+    ]
+  }
+};
+}}}
+
+Файл `src/index.js`:
+{{{javascript
+export default class{
+  constructor(greeting){
+  }
+
+  say(name){
+    console.log(this.greeting + ' ' + name);
+  }
+}
+}}}
