@@ -38,7 +38,7 @@ export default function(){
 
 Файл `src/main.js`:
 {{{javascript
-import('./lazy')
+System.import('./lazy')
   .then(function(module){
     module.default();
   });
