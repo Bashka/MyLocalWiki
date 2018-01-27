@@ -1,0 +1,43 @@
+= Описание =
+`AnimationPlayer()`
+
+Плеер используется для проигрывания [[./Animation|анимаций.]]
+
+= Методы =
+* `int add_animation(String name, Animation animation)` - добавляет анимацию под заданым наименованием в плеер
+* `void play(String name)` - проигрывание анимации с заданым наименованием
+* `void queue(String name)` - добавить анимацию в очередь (для зацикленных анимаций необходимо прежде вызвать `stop`)
+* `void stop()` - останавливает проигрывание анимации
+* `bool is_playing()` - определяет, проигрывается ли в данный момент какая либо анимация
+
+= Примеры =
+Запуск анимации:
+{{{godot
+func _ready():
+  get_node("anim").play("stay")
+}}}
+
+Привязка анимации к вводу пользователя:
+{{{godot
+extends RigidBody2D
+
+var anim = "Stay" # Текущая анимация
+
+func _integrate_forces(s):
+	var animPlayer = get_node("AnimationPlayer")
+	var newAnim = anim # Новая анимация
+	
+	if (Input.is_action_pressed("move_left")):
+		get_node("Sprite").set_scale(Vector2(-1, 1)) # Поворот спрайта в направление движения
+		newAnim = "Walk"
+	elif (Input.is_action_pressed("move_right")):
+		get_node("Sprite").set_scale(Vector2(1, 1)) # Поворот спрайта в направление движения
+		newAnim = "Walk"
+	else:
+		newAnim = "Stay"
+	
+	if (newAnim != anim):
+		animPlayer.stop()
+		animPlayer.play(newAnim)
+		anim = newAnim
+}}}

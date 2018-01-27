@@ -1,0 +1,37 @@
+= Описание =
+{{{bash
+POST /ИНДЕКС/doc/_bulk
+ПАКЕТ
+}}}
+
+Пакетная обработка документов.
+
+= Параметры =
+* `pretty` - вывод ответа JSON с форматированием
+
+= Пример =
+== Пакет в теле запроса ==
+{{{bash
+curl \
+	-X POST \
+	--header "Content-Type: application/json" \
+	localhost:9200/customer/doc/_bulk?pretty \
+	-d '
+	{"index":{"_id":"1"}}
+	{"name": "John Doe" }
+	
+	{"update":{"_id":"1"}}
+	{"name": "Jane Doe"}
+	
+	{"delete":{"_id":"1"}}
+	'
+}}}
+
+== Пакет в файле ==
+{{{bash
+curl \
+	-X POST \
+	--header "Content-Type: application/json" \
+	localhost:9200/customer/doc/_bulk?pretty \
+	--data-binary "@data.json"
+}}}

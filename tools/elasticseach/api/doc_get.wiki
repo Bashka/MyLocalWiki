@@ -1,0 +1,57 @@
+= Описание =
+`GET /ИНДЕКС/doc/ИД`
+
+Получает документ по его идентификатору в системе.
+
+= Параметры =
+* `pretty` - вывод ответа JSON с форматированием
+
+= Пример =
+== Запрос по идентификатору ==
+Запрос:
+{{{bash
+curl -X GET localhost:9200/customer/doc/1?pretty
+}}}
+
+Ответ:
+{{{bash
+{
+  "_index":"customer",
+	"_type":"doc",
+	"_id":"1",
+	"_version":1,
+	"found":true,
+	"_source":
+	{
+		"name": "John Doe"
+	}
+}
+}}}
+
+== Запрос только тела документа ==
+Запрос:
+{{{bash
+curl -X GET localhost:9200/customer/doc/1/_source?pretty
+}}}
+
+Ответ:
+{{{bash
+{
+	"name": "John Doe"
+}
+}}}
+== Запрос отсутствующего документа ==
+Запрос:
+{{{bash
+curl -X GET localhost:9200/customer/doc/2?pretty
+}}}
+
+Ответ:
+{{{bash
+{
+  "_index" : "customer",
+  "_type" : "doc",
+  "_id" : "2",
+  "found" : false
+}
+}}}

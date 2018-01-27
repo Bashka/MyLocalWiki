@@ -1,0 +1,34 @@
+= Описание =
+`DELETE /ИНДЕКС/doc/ИД`
+
+Удаляет документ.
+
+= Параметры =
+* `pretty` - вывод ответа JSON с форматированием
+
+= Пример =
+Запрос:
+{{{bash
+curl \
+	-X DELETE \
+	--header "Content-Type: application/json" \
+	localhost:9200/customer/doc/1?pretty
+}}}
+
+Ответ:
+{{{bash
+{
+  "_index" : "customer",
+  "_type" : "doc",
+  "_id" : "1",
+  "_version" : 2,
+  "result" : "deleted",
+  "_shards" : {
+    "total" : 2,
+    "successful" : 1,
+    "failed" : 0
+  },
+  "_seq_no" : 1,
+  "_primary_term" : 1
+}
+}}}

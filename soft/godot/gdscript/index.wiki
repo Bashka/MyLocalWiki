@@ -1,0 +1,423 @@
+= Комментарии =
+`# text`
+
+= Типы и структуры данных =
+== Null ==
+`null`
+
+== Логический ==
+`true, false`
+
+Операции:
+* `>, >=, ==, !=, <, <=` - сравнение
+* `in` - вхождение в коллекцию
+* `!, &&, ||` - не, и, или
+
+== Целые и дробные числа ==
+`-1, 0, 1, 2` - десятиричные
+`0x8F51` - шестнадцатиричные
+`-1.5, 0.0, 1.5, 2.5` - десятиричные
+`58.1e-10` - научная нотация
+
+Операции:
+* `++, --` - инкремент и декремент (имеют префиксную и постфиксную формы)
+* `+, -, *, /, %` - математические операции
+
+== Строки ==
+`"Hello world"`
+`'Hello world'`
+{{{
+"""
+Multiline
+string
+"""
+}}}
+
+Операции:
+* `+` - конкатенация
+
+[[../api/String|Описание класса]]
+
+== Массивы ==
+`[1, 2, [3, 4]]`
+
+Операции:
+* `array[index]` - получение элемента
+* `+` - конкатенация
+
+[[../api/Array|Описание класса]]
+
+== Словари ==
+`{"foo": {"bar": [1, 2]}}`
+
+Операции:
+* `dict[name]` - получение свойства по имени
+* `dict.name` - получение свойства
+
+[[../api/Dictionary|Описание класса]]
+
+== Объекты ==
+`Label.new()`
+
+Операции:
+* `Class.new(args)` - инстанциация класса
+* `obj extends Class` - наследует ли класс объекта `obj` семантику класса `Class`
+
+[[../api/Object|Описание класса]]
+
+= Переменные и константы =
+* `var name = value` - объявление и инициализация переменной
+* `const NAME = value` - объявление и инициализация константы
+* `enum NAME {ONE = value, TWO = value}` - объявление и инициализация перечисления
+
+== Примеры ==
+Объявление и использование переменной:
+{{{godot
+var age = 15
+age++
+}}}
+
+Объявление и использование константы:
+{{{godot
+const STEP = 5
+
+func _ready():
+	var pos = 0
+	pos += STEP
+}}}
+
+Объявление и использование перечисления:
+{{{godot
+enum STEP {SMALL = 1, MIDDLE = 5, LARGE = 10}
+
+func _ready():
+	var pos = 0
+	pos += STEP.MIDDLE
+}}}
+
+= Условия =
+Ветвление:
+{{{godot
+if condition:
+	true-body
+elif condition:
+	else-if-body
+else:
+	else-body
+}}}
+
+Пример ветвления:
+{{{godot
+var x
+if y > 0:
+	x = 5
+elif y < 0:
+	x = -5
+else:
+	x = 0
+}}}
+
+Тернарный оператор:
+{{{godot
+true-value if condition else false-value
+}}}
+
+Пример тернарного оператора:
+{{{godot
+var x = 5 if y < 10 else 0
+}}}
+
+= Циклы =
+== While ==
+{{{godot
+while condition:
+	body
+}}}
+
+Пример:
+{{{godot
+var x = 10
+while x > 0:
+	print(x)
+	x--
+}}}
+
+== For ==
+{{{godot
+for index in range(start, end, step):
+	body
+}}}
+
+Пример:
+{{{godot
+for i in range(0, 6, 2)
+	print(i) # 0, 2, 4
+}}}
+
+== For-each ==
+{{{godot
+for el in dict:
+	body
+}}}
+
+Пример цикла по строке:
+{{{godot
+var str = "Hello"
+for char in str:
+	print(char)
+}}}
+
+Пример цикла по массиву:
+{{{godot
+var arr = [1, 2, 3]
+for el in arr:
+	print(el)
+}}}
+
+Пример цикла по словарю:
+{{{godot
+var dict = {"foo": "bar"}
+for key in dict:
+	print(dict[key])
+}}}
+
+== Прерывания ==
+* `continue` - прерывание итерации
+* `break` - прерывание цикла
+
+= Функции =
+Объявление:
+{{{godot
+func name(a, b):
+	return a + b # without it null returned
+}}}
+
+Вызов:
+{{{godot
+var res = name(1, 2)
+}}}
+
+Пустая функция:
+{{{godot
+func noAction():
+	pass
+}}}
+
+= Классы =
+== Объявление и использование ==
+Каждый класс (если он не вложеный) следует располагать в отдельном файле с соответствующим именем.
+
+Файл `MyVector2.gd`:
+{{{godot
+# Свойства
+var x = 0
+var y = 0
+	
+# Конструктор
+func _init(x, y):
+	self.x = x
+	self.y = y
+	
+# Методы
+func eq(operand):
+	return self.x == operand.x && self.y = operand.y
+	
+# Статичный метод
+static func clone(obj):
+	return new(obj.x, obj.y) # Вызов статичного метода того же класса
+
+func clone():
+	return get_script().new(self.x, self.y) # Вызов статичного метода класса объекта
+}}}
+
+Для подключения класса из файла используются функции `load` или `preload`:
+{{{godot
+extends SceneTree
+
+# Подключение во время компиляции
+const MyVector2 = preload("MyVector2.gd")
+
+# Подключение во время загрузки
+const MyVector2 = load("MyVector2.gd")
+
+func _init():
+	var obj = MyVector2.new(1, 2)
+	print(obj.x)
+	print(obj.y)
+
+	quit()
+}}}
+
+== Getters/Setters ==
+Если доступ к свойству объекта необходимо инкапсулировать в вызовы методов, используется `setget`:
+{{{godot
+var x = 5 setget setX, getX
+
+func setX(val):
+	x = val
+	
+func getX():
+	return x
+}}}
+
+*Важно:* в методах доступа не разрешается использовать `self`.
+
+Можно инкапсулировать конкретный тип доступа:
+{{{godot
+var x
+var y
+var sum setget , getSum
+
+func getSum():
+	return x + y
+}}}
+
+Методы доступа не будут вызваны без префикса `self`:
+{{{godot
+...
+
+func _init():
+	x = 5 # Не вызывается setter
+	self.x = 5 # Вызывается setter
+}}}
+
+== Наследование ==
+Файл `MyVector3.gd`
+{{{godot
+extends "MyVector2.gd"
+
+var z = 0
+
+# Конструктор дочернего класса, передающий часть аргументов родителю
+func _init(x, y, z).(x, y):
+	self.z = z
+
+# Расширение метода родительского класса
+func eq(operand):
+	return .eq(operand) && self.z == operand.z
+}}}
+
+== Вложенные классы ==
+Файл класса может включать в себя объявления вложенных классов.
+
+Пример:
+{{{godot
+extends SceneTree
+
+class MyClass:
+	...
+
+func _init():
+	var obj = MyClass.new()
+	...
+
+	quit()
+}}}
+
+== Экспорт свойств ==
+Экспортируемые свойства доступны для редактирования в визуальном редакторе.
+
+Пример:
+{{{godot
+# Экспорт переменной, тип которой определятся на основании инициализирующего ее значения
+export var number = 5
+
+# Экспорт переменной целочисленного типа со значением по умолчанию
+export(int) var number = 2
+
+# Экспорт переменной дробного типа со значениеми в диапазоне [-5, 5] и допустимым шагом 0.2
+export(float, -5, 5, 0.2) var number
+
+# Экспорт переменной дробного типа с функциональным редактором
+export(float, EASE) var func
+
+# Экспорт переменной со значением по умолчанию
+export(String) var str = "Hello"
+
+# Экспорт переменной строкового типа с многострочным редактированием
+export(String, MULTILINE) var ml
+
+# Экспорт переменной не встроенного типа
+export(Texture) var t
+
+# Экспорт перечисления
+export(String, "Foo", "Bar") var enum
+
+# Экспорт переменной типа "адрес файла" (из каталога проекта)
+export(String, FILE) var file
+
+# Экспорт переменной типа "адрес файла" с конкретным расширением
+export(String, FILE, "*.png") var file
+
+# Экспорт переменной типа "адрес каталога"
+export(String, DIR) var dir
+
+# Экспорт переменной типа "цвет"
+export(Color, RGB) var c
+# 
+# Экспорт переменной типа "цвет с прозрачностью"
+export(Color, RGBA) var c
+}}}
+
+== Сигналы ==
+Сигналы реализуют событийную модель в системе.
+
+Файл `Unit.gd`:
+{{{godot
+# Объявление параметризованного сигнала в классе
+signal attack(target) 
+
+func attack(target):
+	# Выброс параметризованного сигнала
+	self.emit_signal("attack", target)
+}}}
+
+Файл `main.gd`:
+{{{godot
+extends SceneTree
+
+const Unit = preload("Unit.gd")
+
+func _init():
+	var unit = Unit.new()
+	# Установка обработчика сигнала
+	unit.connect("attack", self, "onAttack")
+	
+	...
+
+	quit()
+
+# Обработчик сигнала
+func onAttack(target):
+	print("Signal triggered")
+	...
+}}}
+
+= Управление памятью =
+== Reference ==
+Все классы, унаследованные от `Reference` используют стековую память, которая освобождается автоматически при потере ссылки на объекты этого класса.
+
+*Важно:* классы являются дочерними `Reference`, если явно не указано иное.
+
+== Object ==
+Все классы, унаследованные от `Object`, не используют стековую память и их экземпляры должны самостоятельно освобождать ее с помощью вызова метода `free()`.
+
+Файл `MyObj.gd`:
+{{{godot
+extends Object
+
+var a = 1
+}}}
+
+Файл `main.gd`:
+{{{godot
+extends SceneTree
+
+const MyObj = preload("MyObj.gd")
+
+func _init():
+	var obj = MyObj.new() # Получение памяти
+	obj.free() # Освобождение памяти
+
+	quit()
+}}}

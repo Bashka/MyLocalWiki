@@ -1,0 +1,38 @@
+= Описание =
+Базовый класс для всех не встроеных типов.
+
+*Важно:* память, занятая экземплярами данного класса, должна быть освобождена явно вызовом метода `free`.
+
+= Методы =
+* Тип:
+	* `GDScript get_script()` - получение ссылки на класс, экземпляром которого является объект
+	* `String get_type()` - получение имени класса, экземпляром которого является объект
+	* `bool is_type(String type)` - проверка, относится ли экземпляр к указанному классу или его потомку
+* Свойства:
+	* `Variant get(String prop)` - получения значения свойства объекта по его имени
+	* `void set(String prop, Variant value)` - установка значения свойству объекта по его имени
+	* `Array get_property_list()` - список доступных свойств
+* Методы:
+	* `Variant call(String method, Variant arg0 = null, ...)` - вызов метода по его имени с передачей аргументов и возвратом ответа
+	* `Variant callv(String method, Array args)` - вызов метода по его имени с передачей массива аргументов и возвратом ответа
+	* `Array get_method_list()` - список доступных методов
+	* `bool has_method(String method)` - проверяет наличие заданного метода
+* Метаданные:
+	* `void set_meta(String name, Varian value)` - устанавливает значение метаданным
+	* `Variant get_meta(String name)` - получает значение метаданных
+	* `bool has_meta(String name)` - определяет наличие метаданных по имени
+	* `Array get_meta_list()` - предоставляет список имен доступных метаданных
+* Сигналы:
+	* `void emit_signal(String signal, Variant arg0 = null, ...)` - выброс сигнала с параметрами
+	* `int connect(String signal, Object context, String method, Array binds = Array(), int flags = 0)` - установка обработчика сигнала
+		* `CONNECT_DEFERRED`
+		* `CONNECT_PERSIST`
+		* `CONNECT_ONESHOT` - обработка сигнала выполняется единожды
+	* `void disconnect(String signal, Object context, String method)` - удаление обработчика сигнала
+	* `bool is_connected(String signal, Object context, String method)` - установлен ли данный обработчик сигнала
+	* `Array get_signal_list()` - список доступных сигналов
+	* `Array get_signal_connection_list(String signal)` - список обработчиков данного сигнала
+	* `void set_block_signals(bool enable)` - устанавливает флаг блокировки сигналов (`true` - если выброс сигналов запрещен)
+	* `bool is_blocking_signals()` - предоставляет флаг блокировки сигналов
+* Разное:
+	* `void free()` - освобождение памяти, занятой объектом

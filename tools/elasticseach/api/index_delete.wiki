@@ -1,0 +1,20 @@
+= Описание =
+`DELETE /ИНДЕКС`
+
+Удаляет индекс.
+
+= Параметры =
+* `pretty` - вывод ответа JSON с форматированием
+
+= Пример =
+Запрос:
+{{{bash
+curl -X DELETE localhost:9200/customer?pretty
+}}}
+
+Ответ:
+{{{bash
+{
+	"acknowledged" : true
+}
+}}}

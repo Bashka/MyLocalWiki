@@ -1,0 +1,14 @@
+= GDScript вне проекта =
+Файл `main.gd`:
+{{{godot
+extends SceneTree
+
+func _init():
+    print("Hello!")
+    quit()
+}}}
+
+Выполнение скрипта:
+{{{bash
+godot -s main.gd
+}}}

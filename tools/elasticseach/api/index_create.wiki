@@ -1,0 +1,22 @@
+= Описание =
+`PUT /ИНДЕКС`
+
+Создает новый индекс.
+
+= Параметры =
+* `pretty` - вывод ответа JSON с форматированием
+
+= Пример =
+Запрос:
+{{{bash
+curl -X PUT localhost:9200/customer?pretty
+}}}
+
+Ответ:
+{{{bash
+{
+  "acknowledged" : true,
+  "shards_acknowledged" : true,
+  "index" : "customer"
+}
+}}}

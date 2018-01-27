@@ -1,0 +1,25 @@
+= Описание =
+`GET /_cat/health`
+
+Предоставляет информацию о состоянии кластеров.
+
+* `cluster` - наименование кластера
+* `status` - статус класстера:
+	* `green` - подготовлены все индексы, документы и реплики (не может быть в кластере с единственным узлом, так как некуда вынести его реплику)
+	* `yellow` - подготовлены все индексы и документы
+	* `red` - часть документов не доступна
+
+= Параметры =
+* `v` - вывод заголовков
+
+= Пример =
+Запрос:
+{{{bash
+curl -X GET localhost:9200/_cat/health?v
+}}}
+
+Ответ:
+{{{bash
+epoch      timestamp cluster        status node.total node.data shards pri relo init unassign pending_tasks max_task_wait_time active_shards_percent
+1514985329 13:15:29  docker-cluster yellow          1         1      1   1    0    0        1             0                  -                 50.0%
+}}}
