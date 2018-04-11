@@ -1,0 +1,92 @@
+Организация сети с предварительной регистрацией игроков.
+
+{{{godot
+extends Node2D
+
+const MAX_PLAYERS = 5
+
+var playerScene = null # Узел игрока
+var positionCell = Vector2() # Позиция вставки объекта игрока в игровой мир
+var readyPlayers = 0 # Количество готовых к игре игроков
+var isStart = false # Флаг начала игры
+
+func _ready():
+	playerScene = preload('res://Player.tscn')
+	
+	get_tree().connect("network_peer_connected", self, "onClientConnected")
+	get_tree().connect("network_peer_disconnected", self, "onClientDisconnected")
+
+# Обработчик события подключения игрока к сети
+func onJoin(host, port):
+	var peer = NetworkedMultiplayerENet.new()
+	peer.create_client(host, port)
+	get_tree().set_network_peer(peer)
+
+# Обработчик события хоста сети
+func onHost(port):
+	var peer = NetworkedMultiplayerENet.new()
+	peer.create_server(port, MAX_PLAYERS)
+	get_tree().set_network_peer(peer)
+	
+	$Lobby.addPlayer(get_tree().get_network_unique_id()) # Добавление хоста в список игроков
+
+# Обработчик события подключения узла к сети
+func onClientConnected(id):
+	if get_tree().is_network_server():
+		$Lobby.addPlayer(id) # Хост добавляет подключенного игрока к списку игроков
+
+# Обработка события отключения узла от сети
+func onClientDisconnected(id):
+	if get_tree().is_network_server():
+		$Lobby.removePlayer(id) # Хост удаляет отключенного игрока из списка игроков
+		
+	# Только если игра уже началась
+	if isStart:
+		$Players.removePlayer(id) # Удаление объекта отключившегося игрока из игрового мира
+		# Завершение игры, если осталось менее двух игроков
+		if $Players.getPlayersCount() < 2:
+			endGame("All players exit")
+
+# Обработчик события старта игры хостом
+func onStart(players):
+	rpc("prepareGame", players) # Передача сигнала подготовки игрового мира к игре всем узлам сети
+
+# Функция, подготавливающая игровой мир узла
+sync func prepareGame(players):
+	get_tree().set_pause(true) # Остановка всех процессов игры
+	
+	# Добавление объектов игроков в игровой мир
+	for id in players:
+		var player = playerScene.instance()
+		player.set_name(String(id))
+		player.position = positionCell
+		player.set_network_master(id)
+		$Players.addPlayer(id, player)
+		positionCell.x += 100 # Смещение позиции добавления объекта для следующего игрока
+	
+	rpc("readyPlayer") # Передача сигнала готовности узла к игре хосту
+
+# Функция, подсчитывающая число готовых к игре узлов
+master func readyPlayer():
+	readyPlayers += 1
+	
+	# Если все игроки готовы к игре, она запускается
+	if readyPlayers == $Lobby.getPlayersCount():
+		rpc("startGame")
+
+# Функция, запускающая игру на всех узлах сети
+sync func startGame():
+	get_tree().set_pause(false)
+	isStart = true
+	
+Функция, завершающая игру
+func endGame(message = ''):
+	get_tree().set_pause(true) # Остановка всех процессов игры
+	$Players.clear() # Удаление всех объектов игроков
+	get_tree().set_network_peer(null) # Отключение от сети
+	
+	# Уведомление об окончании игры
+	$Alert.dialog_text = message
+	$Alert.popup_centered_minsize()
+	get_tree().set_pause(false)
+}}}

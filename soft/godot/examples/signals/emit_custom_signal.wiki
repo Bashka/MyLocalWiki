@@ -1,0 +1,32 @@
+Узел `Form` (распологается на узле `Panel`):
+{{{godot
+extends Control
+
+signal submit(text) # Кастомный, параметризованный сигнал
+
+onready var input = get_node('TextEdit')
+onready var submit = get_node('Button')
+
+func get_text():
+	return input.get_text()
+
+func _ready():
+	submit.connect('pressed', self, 'onSubmit') # Слушатель сигнала нажатия на кнопку
+
+func onSubmit():
+	emit_signal('submit', get_text()) # Триггер кастомного, параметризованного сигнала по нажатию на кнопку
+}}}
+
+Узел `Panel`:
+{{{godot
+extends Panel
+
+onready var label = get_node('Label')
+onready var form = get_node('Form')
+
+func _ready():
+	form.connect('submit', self, 'onSubmit') # Слушатель кастомного, параметризованного сингала формы
+
+func onSubmit(text):
+	label.set_text(text) # Обработка кастомного, параметризованного сигнала формы
+}}}

@@ -1,0 +1,25 @@
+Следование "оружия" за указателем мыши:
+{{{godot
+extends Node2D
+
+onready var sprite = get_node("Sprite") # Спрайт "оружия"
+
+func _process(delta):
+	sprite.look_at(
+		get_global_mouse_position()
+	)
+}}}
+
+Мягкое следование "оружия" за указателем мыши:
+{{{godot
+extends Node2D
+
+const ROTATE_SPEED = 2
+
+onready var sprite = get_node("Sprite") # Спрайт "оружия"
+
+func _process(delta):
+	sprite.rotate(
+		sprite.get_angle_to(get_global_mouse_position()) * delta * ROTATE_SPEED
+	)
+}}}

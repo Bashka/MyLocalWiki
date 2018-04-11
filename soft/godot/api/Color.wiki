@@ -1,0 +1,17 @@
+= Описание =
+Цвет в формате RGBA.
+
+= Свойства =
+* `float r` - красный [0, 1]
+* `float r8` - красный [0, 255]
+* `float g` - зеленый [0, 1]
+* `float g8` - зеленый [0, 255]
+* `float b` - синий [0, 1]
+* `float b8` - синий [0, 255]
+* `float a` - прозрачность [0, 1]
+* `float a8` - прозрачность [0, 255]
+
+= Методы =
+* `Color Color(float r, float g, float b, float a)` - конструктор
+* `Color Color(float r, float g, float b)` - конструктор
+* `Color Color(String name)` - конструктор

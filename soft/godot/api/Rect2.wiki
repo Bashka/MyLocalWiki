@@ -1,0 +1,6 @@
+= Описание =
+Прямоугольник в двумерном пространстве.
+
+= Методы =
+* `Rect2 Rect2(Vector2 position, Vector2 size)` - конструктор
+* `Rect2 Rect2(float x, float y, float width, float height)` - конструктор

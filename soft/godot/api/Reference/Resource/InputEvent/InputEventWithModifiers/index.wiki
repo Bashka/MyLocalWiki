@@ -1,0 +1,9 @@
+= Описание =
+Событие включающие флаги управляющих клавишь (control, alt, command, meta, shift).
+
+= Свойства =
+* `bool alt` - нажата ли клавиша alt
+* `bool command` - нажата ли клавиша command
+* `bool control` - нажата ли клавиша control
+* `bool meta` - нажата ли клавиша meta
+* `bool shift` - нажата ли клавиша shift

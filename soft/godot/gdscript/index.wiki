@@ -421,3 +421,33 @@ func _init():
 
 	quit()
 }}}
+= Сетевое взаимодействие =
+Для сетевого взаимодействия используется одноранговая сеть.
+
+== Сигналы ==
+Перечисленные сигналы относятся к `SceneTree`:
+* Сигналы узла (вызывается на конкретном узле):
+	* `connected_to_server` - успешное подключение к хосту (вызывается до подключения к остальным клиентам, потому вызов `remote func` в обработчике этого сигнала будет передан только серверу)
+	* `connection_failed` - при неудачном подключении к сети
+	* `server_disconnected` - при отключении хоста от сети
+* Сигналы сети (вызывается на всех узлах сети):
+	* `network_peer_connected(int id)` - подключение клиента в сеть
+	* `network_peer_disconnected(int id)` - отключение клиента от сети
+
+== Общие данные ==
+* `remote func` - метод, вызываемый на всех узлах сети, но не локально
+* `sync func` - метод, вызываемый на всех узлах сети и локально
+* `master func` - метод, вызываемый только на хосте сети
+* `slave func` - метод, вызываемый на всех узлах сети кроме хоста
+
+== Вызовы к общим данным ==
+* `rpc_config(String method, RPCMode mode)` - устанавливает режим доступа к методу (`RPC_MODE_DISABLED`, `RPC_MODE_REMOTE`, `RPC_MODE_SYNC`, `RPC_MODE_MASTER`, `RPC_MODE_SLAVE`)
+* `rpc(String func, ...)` - безопастный вызов общей функции с заданым именем и параметрами
+* `rpc_unreliable(String func, ...)` - быстрый вызов общей функции с заданым именем и параметрами
+* `rpc_id(int peer, String func, ...)` - безопастный вызов общей функции с заданым именем и параметрами у указанного узла
+* `rpc_unreliable_id(int peer, String func, ...)` - быстрый вызов общей функции с заданым именем и параметрами у указанного узла
+* `rset_config(String variable, RPCMode mode)` - устанавливает режим доступа к свойству (`RPC_MODE_DISABLED`, `RPC_MODE_REMOTE`, `RPC_MODE_SYNC`, `RPC_MODE_MASTER`, `RPC_MODE_SLAVE`)
+* `rset(String variable, Variant value)` - безопасная синхронизация свойства узла с заданым значением
+* `rset_unreliable(String variable, Variant value)` - быстрая синхронизация свойства узла с заданым значением
+* `rset_id(int peer, String variable, Variant value)` - безопасная синхронизация свойства узла с указанным узлом с заданым значением
+* `rset_unreliable_id(int peer, String variable, Variant value)` - быстрая синхронизация свойства узла с указанным узлом с заданым значением

@@ -1,6 +1,5 @@
 * [[cli|Работа в консоли]]
 * [[gdscript/|GDScript]]
-* [[api/|API]]
 * Примеры
 	* [[examples/gdscript|GDScript]] - использование GDScript
-	* [[examples/tiles|TileMap]] - использование тайлов для построения игрового мира
+	* [[examples/signals/emit_custom_signal|Emit custom signal]] - создание и выброс кастомного сигнала

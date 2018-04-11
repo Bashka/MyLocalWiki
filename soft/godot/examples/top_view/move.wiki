@@ -1,0 +1,23 @@
+Движение:
+{{{godot
+extends Node2D
+
+const SPEED = 200
+
+onready var sprite = get_node("Sprite") # Спрайт "лица"
+
+func _process(delta):
+	sprite.look_at(get_global_mouse_position())
+	
+	var offset = Vector2(0, 0)
+	if Input.is_action_pressed("ui_up"):
+		offset.y -= 1
+	if Input.is_action_pressed("ui_down"):
+		offset.y += 1
+	if Input.is_action_pressed("ui_left"):
+		offset.x -= 1
+	if Input.is_action_pressed("ui_right"):
+		offset.x += 1
+		
+	translate(offset * SPEED * delta)
+}}}

@@ -1,0 +1,10 @@
+= Описание =
+Базовый класс событий системы, обрабатываемых методом `Node._input`.
+
+= Методы =
+* `bool action_match(InputEvent event)` - соответствует ли вызываемое событие данному
+* `String as_text()` - строковое представление события
+* `bool is_pressed()` - `true` если событие нажато
+* `bool is_action(String action)` - соответствует ли событие данному типу (см. [[./InputEventAction/|InputEventAction]])
+* `bool is_action_pressed(String action)` - `true` если нажато событие заданного типа (аналогично `is_action(...) && is_pressed()`)
+* `bool is_action_released(String action)` - `true` если отжато событие заданного типа (аналогично `is_action(...) && !is_pressed()`)
