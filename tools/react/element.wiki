@@ -1,0 +1,36 @@
+`VNode createElement(tagName, [attributes], [...children])`
+
+Создает новый виртуальный элемент с заданными атрибутами и дочерними элементами.
+
+Свойства:
+* `nodeName` - имя узла DOM
+* `Object attributes` - аттрибуты элемента
+* `Array children` - дочерние элементы
+* `key` - ключ элемента
+
+{{{javascript
+import { render, createElement } from "react";
+
+const MyForm = createElement(
+  'div', // Тег узла
+  {className: 'form'}, // Аттрибуты узла
+	// Дочерние узлы (может быть массивом)
+  createElement(
+    'h2',
+    {},
+    'Hello'
+  ),
+  createElement(
+    'input',
+    {
+      type: 'text',
+			// Обработчик события узла
+      onInput: function(e){
+        console.log(e.target.value);
+      }
+    }
+  )
+);
+
+render(MyForm, document.body);
+}}}

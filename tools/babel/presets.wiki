@@ -1,0 +1,35 @@
+= Описание =
+Плагины группируются в {{https://babeljs.io/docs/plugins/#presets|пресеты}}, для быстрой конфигурации Babel.
+
+Пресеты распространяются в репозитории пакетов `npm` с префиксом `babel-preset-*` за которым следует имя пресета.
+{{{bash
+npm install --save-dev babel-preset-env
+}}}
+
+Для подключения пресета к компилятору используется только его имя:
+{{{bash
+babel --presets env script.js
+}}}
+
+{{{javascript
+// without options
+{
+  "presets": ["env"]
+}
+
+// with options
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions", "safari >= 7"]
+      }
+    }]
+  ]
+}
+}}}
+
+Плагины применяются в порядке, обратном их объявлению.
+
+= Библиотека пресетов =
+* `env` - мета-пресет, включающий `es2015`, `es2016`, `es2017`

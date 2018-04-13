@@ -3,6 +3,9 @@
 * [[/tools/make/|Make]]
 * [[/tools/gulp/|Gulp]]
 * [[/tools/webpack/|WebPack]]
+* [[/tools/babel/|Babel]]
+* [[/tools/react/|React]]
+* [[/tools/mobx/|Mobx]]
 
 = Разное =
 * [[/about|О вики]]

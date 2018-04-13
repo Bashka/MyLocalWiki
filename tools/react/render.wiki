@@ -1,0 +1,9 @@
+`render(VNode el, DOMNode parent)`
+
+Применяет изменения в элементе к DOM-узлу.
+
+{{{javascript
+import { render } from "react";
+
+render(<div>Hello world</div>, document.body);
+}}}

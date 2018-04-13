@@ -1,0 +1,33 @@
+= Описание =
+Babel является компилятором, использующим три стандартных этапа для преобразования. Непосредственно преобразованием исходных кодов занимаются {{https://babeljs.io/docs/plugins/#transform-plugins|плагины}}.
+
+Плагины распространяются в репозитории пакетов `npm` с префиксом `babel-plugin-*` за которым следует имя плагина.
+{{{bash
+npm install --save-dev babel-plugin-transform-es2015-classes
+}}}
+
+Для подключения плагина к компилятору используется только его имя:
+{{{bash
+babel --plugins transform-es2015-classes script.js
+}}}
+
+{{{javascript
+// without options
+{
+  "plugins": ["transform-es2015-classes"]
+}
+
+// with options
+{
+  "plugins": [
+    ["transform-es2015-classes", {
+      "loose": true
+    }]
+  ]
+}
+}}}
+
+Плагины применяются в порядке их объявления.
+
+= Библиотека плагинов =
+* `transform-es2015-classes` - преобразование классов

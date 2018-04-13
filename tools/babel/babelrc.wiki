@@ -1,0 +1,36 @@
+= Описание =
+`.babelrc` является файлом конфигурации для Babel. Он содержит конфигурацию в формате `JSON` и подключается автоматически из корня проекта.
+
+Свойства конфигурации:
+* `plugins` - используемые плагины
+* `presets` - используемые пресеты
+* `ignore` - игнорируемые при компиляции файлы и каталоги
+* `env` - конфигурации, применяемые для конкретного окружения (переменные `BABEL_ENV` или `NODE_ENV`, по умолчанию `development`)
+
+{{{javascript
+{
+  "env": {
+    "production": {
+      "presets": ["env", {
+				// production options
+			}]
+    },
+		"development": {
+      "presets": ["env", {
+				// development options
+			}]
+		}
+  }
+}
+}}}
+
+Конфигурацию Babel можно так же описать в файле проекта `package.json`:
+{{{javascript
+{
+  "name": "my-package",
+  "version": "1.0.0",
+  "babel": {
+    // my babel config here
+  }
+}
+}}}

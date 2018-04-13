@@ -1,0 +1,88 @@
+= Описание =
+JSX используется для декларации `VNode`. Препроцессор JSX автоматически преобразовывает его в виртуальный узел.
+
+{{{javascript
+import { render } from "react";
+
+const MyEl = <div>Hello world</div>;
+
+render(MyEl, document.body);
+}}}
+
+Для компиляции JSX используются плагины для сборщиков и бандлеров проекта:
+{{{javascript
+// Webpack
+module: {
+	rules: [
+		{
+			test: /\.js$/,
+			exclude: /node_modules/,
+			use: {
+				loader: 'babel-loader',
+				options: {
+					plugins: [
+						['transform-react-jsx', {'pragma': 'h'}]
+					]
+				}
+			}
+		}
+	]
+}
+}}}
+
+= Собственные компоненты =
+JSX может быть расширен собственными [[component|Компонентами]], для этого может использоваться функция, возвращающая [[element|VNode]], или класс, унаследованный от [[component|Component]].
+
+{{{javascript
+import { render } from "react";
+
+const MyEl = (props) => <div>Hello world</div>;
+
+render(<MyEl/>, document.body);
+}}}
+
+{{{javascript
+import { render, Component } from "react";
+
+class MyEl extends Component{
+	render(props){
+		return <div>Hello world</div>;
+	}
+}
+
+render(<MyEl/>, document.body);
+}}}
+
+Собственным компонентам JSX передаются следующие параметры:
+* `Object props` - аттрибуты узла
+	* `Array children` - дочерние узлы
+
+= Аттрибуты =
+Аттрибуты узлов JSX могут записываться как:
+{{{javascript
+<input
+	type="text" // Константы
+	value={props.value} // Переменные
+	onChange={alert('Hi')} // Функции
+/>
+}}}
+
+= Дочерние узлы =
+Дочерние узлы JSX представлены массивом элементов:
+{{{javascript
+import { render } from "react";
+
+function Numbers(props){
+  return (
+    <ul>{
+      props.numbers.map(
+        (num) => <li key={num}>{num}</li>
+      )
+    }</ul>
+  );
+}
+
+render(<Numbers numbers={[1, 2, 3]}/>, document.body);
+}}}
+
+*Важно:* аттрибут `key` используется React для определения изменений в дочерних узлах. При отсутствии ключа, обновлены будут все дочерние элементы узла, а не только измененные.

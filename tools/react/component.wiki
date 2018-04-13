@@ -1,0 +1,26 @@
+= Объявление =
+`Component` является родительским классом компонентов React.
+
+Свойства:
+* `props` - аттрибуты
+* `state` - внутреннее состояние
+
+Методы:
+* `Component constructor(Object props)`
+* `VNode render(Object props)` - рендер элемента
+* `forceUpdate()` - принудительно перерисовывает элемент
+* `setState(Object|Function)` - обновляет внутреннее состояние (при использовании функции, ей передаются аргументы `prevState` и `props`, на что она должна возвращать объект с новым внутренним состоянием)
+* `componentDidMount()` - вызывается когда узел компонент добавлен в DOM
+* `componentWillUnmount()` - вызывается когда узел компонента удален из DOM
+
+{{{javascript
+import { render, Component } from "react";
+
+class MyComponent extends Component{
+	render(){
+		return <div>{this.props.value}</div>;
+	}
+}
+
+render(<MyComponent value="Hello world"/>, document.body);
+}}}

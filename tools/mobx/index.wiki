@@ -1,0 +1,195 @@
+= Observable =
+Наблюдаемые объекты используются для добавления реактивности переменным и свойствам класса.
+
+* `IObservableValue observable.box(String|Numeric value, [Array options])` - добавляет реактивности переменной
+* `IObservableArray observable.array(Array value, [Array options])` - добавляет реактивности массиву
+* `IObservableMap observable.map(Map value, [Array options])` - добавляет реактивности хешу
+* `IObservableObject observable.object(Object value, [Array decorators], [Array options])` - добавляет реактивности объекту
+
+{{{javascript
+import { observable, autorun } from "mobx";
+
+// Value
+const coutner = observable.box(0);
+autorun(() => {
+	console.log(coutner.get());
+});
+
+
+counter.set(counter.get() + 1);
+
+// Object
+const obj = observable.object({
+	foo: 'bar'
+});
+autorun(() => {
+	console.log(obj.foo);
+});
+
+obj.foo = 'baz';
+}}}
+
+Свойства класса можно пометить как наблюдаемые с помощью декоратора `@observable`:
+{{{javascript
+import { observable, autorun } from "mobx";
+
+class Counter{
+	@observable // babel-plugin-transform-decorators-legacy
+	value = 0; // babel-plugin-transform-class-properties
+
+	inc(){
+		this.value++;
+	}
+}
+
+const c = new Counter;
+
+autorun(() => {
+	console.log(c.value);
+});
+
+c.inc();
+}}}
+
+= Computed =
+Декоратор `@computed` маркерует мутабельные свойства класса, кешируя их. Это позволяет снизить нагрузку при реакции на изменения в сложных мутабельных свойствах.
+
+{{{javascript
+import { observable, computed, autorun } from "mobx";
+
+class Sum{
+	@observable
+	numbers = [];
+	
+	@computed
+	get sum(){
+		return this.numbers.reduce((a, b) => a + b, 0);
+	}
+}
+
+const obj = new Sum;
+
+autorun(() => { // 0
+  console.log(obj.sum);
+});
+
+obj.numbers.push(1); // 1
+obj.numbers.push(2); // 3
+obj.numbers = [1,2]; // autorun не вызывается, так как состояние не изменено
+obj.numbers = [2,2]; // 4
+}}}
+
+= Action =
+Декоратор `@action` маркерует методы класса, вызов которых приводит к изменению его состояния. Это позволяет организовать транзакции, реагирующие только на полное обновление состояния методом, без учета промежуточных изменений.
+
+{{{javascript
+import { observable, computed, action, autorun } from "mobx";
+
+class Sum{
+	@observable
+	numbers = [];
+	
+	@action
+  fill(){
+    this.numbers.push(1); // autorun не вызывается
+    this.numbers.push(2); // autorun не вызывается
+    this.numbers.push(3); // вызывается autorun
+  }
+
+  @computed
+	get sum(){
+		return this.numbers.reduce((a, b) => a + b, 0);
+	}
+}
+
+const obj = new Sum;
+
+autorun(() => { // 0
+  console.log(obj.sum);
+});
+
+obj.fill(); // 6
+}}}
+
+= Observer =
+Декоратор `@observer` маркерует React-компоненты, использующие реактивные данные. Реакцией в этом случае является перерисовка компонента на странице.
+
+{{{javascript
+import { observable, computed } from "mobx";
+import { observer, inject } from "mobx-preact";
+import { h, render, Component } from "preact";
+
+const CounterView = observer(function({store}){
+  return (
+    <div>
+      <input type="button" value="-" onClick={store.dec.bind(store)}/>
+      <input type="text" value={store.value} onChange={
+        (e) => {
+          const value = parseInt(e.target.value);
+          if(!store.isValid(value)){
+            this.forceUpdate()
+          }
+
+          store.setValue(value);
+        }
+      }/>
+      <input type="button" value="+" onClick={store.inc.bind(store)}/>
+    </div>
+  );
+});
+
+class Counter{
+  @observable
+  value = 0;
+  max = null;
+  min = null;
+
+  constructor(min = null, max = null){
+    this.min = min;
+    this.max = max;
+  }
+
+  isValid(value){
+    return Number.isInteger(value)
+      && (this.min !== null && value >= this.min)
+      && (this.max !== null && value <= this.max);
+  }
+
+  inc(){
+    this.setValue(this.value + 1);
+  }
+
+  dec(){
+    this.setValue(this.value - 1);
+  }
+
+  setValue(value){
+    if(!this.isValid(value)){
+      return;
+    }
+
+    this.value = value;
+  }
+}
+
+render(
+  <CounterView store={new Counter(0, 2)}/>,
+  document.body
+);
+}}}
+
+= Autorun =
+Обертка `autorun` вызывает переданную ей функцию при изменении любых реактивных данных, используемых в ней. Данная функция вызывается сразу при регистрации.
+
+{{{javascript
+import { observable, autorun } from "mobx";
+
+const coutner = observable.box(0);
+autorun(() => { // вызов autorun
+	console.log(coutner.get());
+});
+
+
+counter.set(counter.get() + 1); // вызов autorun
+counter.set(counter.get() + 2); // вызов autorun
+}}}
