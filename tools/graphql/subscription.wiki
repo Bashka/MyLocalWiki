@@ -1,0 +1,9 @@
+Схема:
+{{{
+subscription {
+	statusChange {
+		name
+		status
+	}
+}
+}}}

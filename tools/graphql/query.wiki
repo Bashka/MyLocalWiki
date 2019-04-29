@@ -1,0 +1,20 @@
+Схема:
+{{{
+query (
+	$status: UserStatus!
+) {
+	deleted: users (status: $status) {
+		name
+		friends {
+			name
+		}
+	}
+}
+}}}
+
+Переменные:
+{{{
+{
+	"status": "DELETED"
+}
+}}}

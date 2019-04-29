@@ -1,0 +1,20 @@
+Схема:
+{{{
+mutation (
+	$id: ID!
+	$status: UserStatus!
+) {
+	setStatus (id: $id, status: $status) {
+		name
+		status
+	}
+}
+}}}
+
+Переменные:
+{{{
+{
+	"id": "1",
+	"status": "DELETED"
+}
+}}}

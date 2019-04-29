@@ -1,0 +1,17 @@
+Схема:
+{{{
+fragment userInfo on User {
+	name
+}
+
+query {
+	users {
+		id
+		...userInfo
+		status
+		friends {
+			...userInfo
+		}
+	}
+}
+}}}

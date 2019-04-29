@@ -1,0 +1,4 @@
+* [[query|Запросы]]
+* [[fragment|Фрагменты]]
+* [[mutation|Мутации]]
+* [[subscription|Подписки]]
