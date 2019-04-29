@@ -52,6 +52,20 @@ c.inc();
 }}}
 
 = Computed =
+Обертка `computed` позволяет создать мутабельные переменные, реагирующие на реактивные данные.
+
+{{{javascript
+import { observable, computed } from "mobx";
+
+const a = observable.box(1),
+	b = observable.box(1);
+	sum = computed(() => a + b);
+	
+console.log(sum.get()); // 2
+a.set(a.get() + 1)
+console.log(sum.get()); // 3
+}}}
+
 Декоратор `@computed` маркерует мутабельные свойства класса, кешируя их. Это позволяет снизить нагрузку при реакции на изменения в сложных мутабельных свойствах.
 
 {{{javascript
@@ -192,4 +206,17 @@ autorun(() => { // вызов autorun
 
 counter.set(counter.get() + 1); // вызов autorun
 counter.set(counter.get() + 2); // вызов autorun
+}}}
+
+= When =
+Предикат `when` вызывается единожды при выполнении некоторого условия.
+
+{{{javascript
+import { observable, when } from "mobx";
+
+const counter = observable.box(0);
+when(
+	() => counter.get() > 10, // Условие предиката
+	() => counter.set(0) // Действие предиката
+);
 }}}

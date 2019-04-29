@@ -1,0 +1,23 @@
+* `Bool(name string, default bool, description string) *bool` - описывает флаг типа `bool`
+* `String(name string, default string, description string) *string` - описывает флаг типа `string`
+* `Int(name string, default int, description string) *int` - описывает флаг типа `int`
+* `Args() []string` - предоставляет массив аргументов, не идентифицированных в качестве флагов
+* `Parse()` - обновляет переменные, содержащие значения флагов
+* `Parsed() bool` - были ли проанализированы флаги командной строки
+
+{{{go
+package main
+
+import (
+	"flag"
+)
+
+var verbation *bool = flag.Bool("v", false, "verbation mode")
+var host *string = flag.String("h", "127.0.0.1", "host uri")
+
+func main() {
+	flag.Parse()
+
+	...
+}
+}}}

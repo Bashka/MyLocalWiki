@@ -6,6 +6,8 @@
 	* `filename` - имя файла пакета (`[name]` - имя входного скрипта, `[chunkhash]` - хеш компонента)
 	* `path` - адрес каталога пакета
 	* `publicPath` - публичный адрес каталога пакета
+	* `libraryTarget` - тип экспорта (`var` - в качестве переменной, `this` - в качестве свойства, `window` - в глобальную область видимости, `umd` - в виде UMD-пакета)
+	* `library` - псевдоним экспортируемой библиотеки
 * `devtool` - правило генерации source maps ({{https://webpack.js.org/configuration/devtool#devtool|Devtool}})
 * `module` - конфигурации подключаемых модулей
 	* `rules` - правила загрузки модулей
@@ -35,7 +37,11 @@ module.exports = {
 		// Каталог пакета
     path: __dirname + '/public/dist',
 		// Публичный адрес каталога пакета
-		publicPath: '/dist/'
+		publicPath: '/dist/',
+		// Экспортировать библиотеку с именем window.lib
+		library: 'lib',
+		// Экспортировать в глобальное пространство имен window
+		libraryTarget: 'window'
   },
 	// Конфигурация подключаемых модули
 	module: {

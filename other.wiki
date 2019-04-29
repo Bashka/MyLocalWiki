@@ -1,1 +1,2 @@
 * `sudo dpkg-reconfigure keyboard-configuration` - конфигурация клавиатуры (для отключения свитчера)
+* `xrandr -s 1366x768` - установка разрешения экрана

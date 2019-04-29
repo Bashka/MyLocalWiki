@@ -1,0 +1,31 @@
+= Описание =
+Ссылки позволяют обращаться к узлам DOM из компонента.
+
+{{{javascript
+class CustomTextInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.inputRef = null;
+  }
+
+  onSubmit() {
+    const value = this.inputRef.current.value;
+		//...
+  }
+
+  render() {
+    return (
+      <div>
+        <input
+          type="text"
+          ref={(node) => this.inputRef = ref} />
+        <input
+          type="button"
+          value="Submit"
+          onClick={this.onSubmit.bind(this)}
+        />
+      </div>
+    );
+  }
+}
+}}}
