@@ -1,0 +1,36 @@
+{{{
+server { # Сервер, обрабатывающий запрос
+	listen 80 default_server; # Сервер по умолчанию для адреса 127.0.0.1:80
+	server_name site.org www.site.org; # Слушать только запросы с заданными заголовками Host
+	
+	root /var/www; # Корневой каталог сайта
+	
+	location / { # Префиксный, вторичный обработчик пути
+		index index.html index.php; # Файлы по умолчанию, используемые в ответе
+	}
+	
+	location ~* \.(gif|jpg|png)$ { # Первичный обработчик с регулярным выражением
+		expires 30d; # Кеширование на 30 дней
+	}
+	
+	location ~ \.php$ {
+		fastcgi_pass localhost:9000; # Перенаправление запроса fast-cgi серверу
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name; # Адрес файла cgi-скрипта, доступного fast-cgi серверу и используемого для генерации ответа
+		# $document_root - директива root
+		# $fastcgi_script_name - URI путь (на пример для http://site.ru/foo/bar/index.php это будет /foo/bar/index.php)
+		include fastcgi_params; # Подключение файла конфигурации fastcgi_params
+	}
+}
+
+server {
+	listen 80;
+	server_name site.com www.site.com;
+}
+
+server {
+	listen 192.168.1.2:80 default_server; # Сервер по умолчанию для адреса 192.168.1.2:80
+	server_name site.com www.site.com;
+	
+	return 404; # Возврат кода состояния
+}
+}}}
